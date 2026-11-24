@@ -1,0 +1,67 @@
+server:
+  port: 8080
+  error:
+    include-message: never
+    include-stacktrace: always
+  servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 6MB
+  logging:
+    level:
+      com.example.aitravelserver.common.auth: debug
+app:
+  upload:
+#    dir: D:/广州理工/项目/AItravel-server/uploads
+    subdir: banner
+
+
+spring:
+  application:
+    name: aitravel-server
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${DB_HOST:127.0.0.1}:${DB_PORT:3306}/${DB_NAME:travel}?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:}
+
+  redis:
+    host: ${REDIS_HOST:localhost}
+    port: ${REDIS_PORT:6379}
+    database: ${REDIS_DATABASE:0}
+    timeout: ${REDIS_TIMEOUT:3000}
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.security.reactive.ReactiveSecurityAutoConfiguration
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      id-type: auto
+      logic-delete-field: deleted
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+  mapper-locations: classpath*:/mapper/**/*.xml
+  type-aliases-package: com.example.aitravelserver.module
+
+jwt:
+  secret: ${JWT_SECRET:}
+  access-minutes: 120
+  refresh-days: 7
+
+llm:
+  base-url: ${LLM_BASE_URL:https://api.siliconflow.cn/v1}
+  model: ${LLM_MODEL:deepseek-ai/DeepSeek-V4.1-Flash}
+  api-key: ${LLM_API_KEY:sk-bgfabsyloxyisifyiuuyiwkruujwxiqpzvzzzvduobsmyryd}
+
+amap:
+  key: ${AMAP_KEY:1be4e51e5311a28fd0fc1403ca32098c}
+
